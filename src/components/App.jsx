@@ -42,6 +42,7 @@ function App() {
       setUserData(user);
       setCards(cards);
     })
+    .catch((error) => console.log(error));
   }, []);
 
 
