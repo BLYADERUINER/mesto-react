@@ -1,14 +1,16 @@
-import React from "react";
-import Header from "./Header.jsx";
-import Main from "./Main.jsx";
-import Footer from "./Footer.jsx";
-import PopupWithForm from "./PopupWithForm.jsx";
+import React from 'react';
+import Header from './Header.jsx';
+import Main from './Main.jsx';
+import Footer from './Footer.jsx';
+import PopupWithForm from './PopupWithForm.jsx';
 import { api } from '../utils/api.js';
+import ImagePopup from './ImagePopup.jsx';
 
 function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
+  const [selectedCard, setSelectedCard] = React.useState(null);
   // открытие попов используя Хук состояния
   function handleEditProfileOnClick() {
     setEditProfilePopupOpen(true);
@@ -21,11 +23,13 @@ function App() {
   function handleEditAvatarPopupOnClick() {
     setEditAvatarPopupOpen(true);
   }
+  
 
   function closeAllPopups() {
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
     setEditAvatarPopupOpen(false);
+    setSelectedCard(null);
   }
 
   const [user, setUserData] = React.useState([]);
@@ -40,6 +44,8 @@ function App() {
     })
   }, []);
 
+
+
   return (
     <>
       <Header />
@@ -48,6 +54,7 @@ function App() {
         userDescription={user.about}
         userAvatar={user.avatar}
         cardsData={cards}
+        onCardClick={setSelectedCard}
         handleEditAvatarCLick={handleEditAvatarPopupOnClick}
         handleEditProfileClick={handleEditProfileOnClick}
         handleAddPlaceClick={handleAddCardPopupOnClick}
@@ -135,6 +142,7 @@ function App() {
       </PopupWithForm>
         {/* Popup delete card  */}
       <PopupWithForm popupName="delete-card" popupTitle="Вы уверены ?" popupTextButton="Да" />
+      <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
     </>
   );
 }
