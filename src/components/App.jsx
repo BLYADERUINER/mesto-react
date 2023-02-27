@@ -21,8 +21,13 @@ function App() {
     setEditAvatarPopupOpen(true);
   }
 
+  function closeAllPopups() {
+    setEditProfilePopupOpen(false);
+    setAddPlacePopupOpen(false);
+    setEditAvatarPopupOpen(false);
+  }
 
-  
+
   return (
     <>
       <Header />
@@ -33,7 +38,13 @@ function App() {
       />
       <Footer />
         {/* Popup edit profile */}
-      <PopupWithForm popupName="edit-profile" popupTitle="Редактировать профиль" popupTextButton="Сохранить" isOpen={isEditProfilePopupOpen}>
+      <PopupWithForm 
+       popupName="edit-profile" 
+       popupTitle="Редактировать профиль" 
+       popupTextButton="Сохранить" 
+       isOpen={isEditProfilePopupOpen}
+       onClose={closeAllPopups}
+      >
         <input
           className="pop-up__input pop-up__input_edit-userName"
           name="userName"
@@ -60,7 +71,13 @@ function App() {
         <span className="pop-up__error" id="input-userAbout-error"></span>
       </PopupWithForm>
         {/* Popup Add card */}
-      <PopupWithForm popupName="add-card" popupTitle="Новое место" popupTextButton="Создать"  isOpen={isAddPlacePopupOpen}>
+      <PopupWithForm 
+       popupName="add-card" 
+       popupTitle="Новое место" 
+       popupTextButton="Создать"  
+       isOpen={isAddPlacePopupOpen}
+       onClose={closeAllPopups}
+      >
         <input
           className="pop-up__input pop-up__input_card-name"
           name="cardName"
@@ -83,7 +100,13 @@ function App() {
         <span className="pop-up__error" id="input-cardLink-error"></span>
       </PopupWithForm>
         {/* Popup edit avatar */}
-      <PopupWithForm popupName="edit-avatar" popupTitle="Обновить аватар" popupTextButton="Сохранить" isOpen={isEditAvatarPopupOpen}>
+      <PopupWithForm 
+       popupName="edit-avatar" 
+       popupTitle="Обновить аватар" 
+       popupTextButton="Сохранить" 
+       isOpen={isEditAvatarPopupOpen}
+       onClose={closeAllPopups}
+       >
         <input
           className="pop-up__input pop-up__input_avatar-link"
           name="avatarLink"
