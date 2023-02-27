@@ -32,7 +32,7 @@ function App() {
     setSelectedCard(null);
   }
 
-  const [user, setUserData] = React.useState([]);
+  const [user, setUserData] = React.useState({});
   const [cards, setCards] = React.useState([]);
   
 
