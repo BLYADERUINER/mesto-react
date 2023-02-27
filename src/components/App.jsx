@@ -5,29 +5,35 @@ import Footer from "./Footer.jsx";
 import PopupWithForm from "./PopupWithForm.jsx";
 
 function App() {
+  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
+  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
+  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
+  // открытие попов используя Хук состояния
+  function handleEditProfileOnClick() {
+    setEditProfilePopupOpen(true);
+  }
+
+  function handleAddCardPopupOnClick() {
+    setAddPlacePopupOpen(true);
+  }
+
+  function handleEditAvatarPopupOnClick() {
+    setEditAvatarPopupOpen(true);
+  }
+
+
+  
   return (
     <>
       <Header />
       <Main
-        handleEditAvatarCLick={() =>
-          document
-            .querySelector(".pop-up_edit-avatar")
-            .classList.add("pop-up_opened")
-        }
-        handleEditProfileClick={() =>
-          document
-            .querySelector(".pop-up_edit-profile")
-            .classList.add("pop-up_opened")
-        }
-        handleAddPlaceClick={() =>
-          document
-            .querySelector(".pop-up_add-card")
-            .classList.add("pop-up_opened")
-        }
+        handleEditAvatarCLick={handleEditAvatarPopupOnClick}
+        handleEditProfileClick={handleEditProfileOnClick}
+        handleAddPlaceClick={handleAddCardPopupOnClick}
       />
       <Footer />
         {/* Popup edit profile */}
-      <PopupWithForm popupName="edit-profile" popupTitle="Редактировать профиль" popupTextButton="Сохранить">
+      <PopupWithForm popupName="edit-profile" popupTitle="Редактировать профиль" popupTextButton="Сохранить" isOpen={isEditProfilePopupOpen}>
         <input
           className="pop-up__input pop-up__input_edit-userName"
           name="userName"
@@ -54,7 +60,7 @@ function App() {
         <span className="pop-up__error" id="input-userAbout-error"></span>
       </PopupWithForm>
         {/* Popup Add card */}
-      <PopupWithForm popupName="add-card" popupTitle="Новое место" popupTextButton="Создать">
+      <PopupWithForm popupName="add-card" popupTitle="Новое место" popupTextButton="Создать"  isOpen={isAddPlacePopupOpen}>
         <input
           className="pop-up__input pop-up__input_card-name"
           name="cardName"
@@ -77,7 +83,7 @@ function App() {
         <span className="pop-up__error" id="input-cardLink-error"></span>
       </PopupWithForm>
         {/* Popup edit avatar */}
-      <PopupWithForm popupName="edit-avatar" popupTitle="Обновить аватар" popupTextButton="Сохранить">
+      <PopupWithForm popupName="edit-avatar" popupTitle="Обновить аватар" popupTextButton="Сохранить" isOpen={isEditAvatarPopupOpen}>
         <input
           className="pop-up__input pop-up__input_avatar-link"
           name="avatarLink"
@@ -91,20 +97,10 @@ function App() {
         {/* Popup delete card  */}
       <PopupWithForm popupName="delete-card" popupTitle="Вы уверены ?" popupTextButton="Да" />
 
-      <div className="pop-up pop-up_card-image">
-        <figure className="pop-up__figure">
-          <img className="pop-up__image" />
-          <figcaption className="pop-up__figcaption"></figcaption>
-          <button
-            className="button pop-up__button-close"
-            type="button"
-          ></button>
-        </figure>
-      </div>
 
       <template id="card">
         <article className="element">
-          <img className="element__image" />
+          <img className="element__image" alt="" />
           <button className="button element__button-bin" type="button"></button>
           <div className="element__container">
             <h2 className="element__title"></h2>
