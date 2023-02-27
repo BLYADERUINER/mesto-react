@@ -6,7 +6,7 @@ function PopupWithForm({ popupName, popupTitle, popupTextButton, children, isOpe
         <h2 className="pop-up__title">{`${popupTitle}`}</h2>
         <form className="pop-up__form" name={`${popupName}`} method="post">
           {children}
-          <button className="button pop-up__button-save" type="submit">
+          <button className="button pop-up__button-save" type="submit" onChange={(evt) => evt.preventDefault()}>
             {popupTextButton}
           </button>
         </form>

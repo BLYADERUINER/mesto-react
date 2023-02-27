@@ -1,17 +1,19 @@
+import Card from "./Card.jsx";
+
 function Main({
+  userName,
+  userDescription,
+  userAvatar,
+  cardsData,
   handleEditAvatarCLick,
   handleEditProfileClick,
-  handleAddPlaceClick,
+  handleAddPlaceClick
 }) {
   return (
     <main className="content page__content">
       <section className="profile content__profile">
         <div className="profile__container-avatar">
-          <img
-            className="profile__avatar"
-            src="<%=require('./images/profile__avatar/avatar.jpg')%>"
-            alt="Аватрка"
-          />
+          <div className="profile__avatar" style={{ backgroundImage: `url(${userAvatar})`}}></div>
           <button
             className="profile__avatar-button-edit"
             onClick={handleEditAvatarCLick}
@@ -19,14 +21,14 @@ function Main({
         </div>
         <div className="profile__info">
           <div className="profile__container">
-            <h1 className="profile__name">Жак-Ив Кусто</h1>
+            <h1 className="profile__name">{userName}</h1>
             <button
               className="button profile__button-edit"
               type="button"
               onClick={handleEditProfileClick}
             ></button>
           </div>
-          <p className="profile__status">Исследователь океана</p>
+          <p className="profile__status">{userDescription}</p>
         </div>
         <button
           className="button profile__button-add"
@@ -34,7 +36,9 @@ function Main({
           onClick={handleAddPlaceClick}
         ></button>
       </section>
-      <section className="elements content__elements"></section>
+      <section className="elements content__elements">
+        {cardsData.map((card) => <Card cardName={card.name} cardLink={card.link} />)}
+      </section>
     </main>
   );
 }

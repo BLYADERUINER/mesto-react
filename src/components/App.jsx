@@ -3,6 +3,7 @@ import Header from "./Header.jsx";
 import Main from "./Main.jsx";
 import Footer from "./Footer.jsx";
 import PopupWithForm from "./PopupWithForm.jsx";
+import { api } from '../utils/api.js';
 
 function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
@@ -27,11 +28,26 @@ function App() {
     setEditAvatarPopupOpen(false);
   }
 
+  const [user, setUserData] = React.useState([]);
+  const [cards, setCards] = React.useState([]);
+  
+
+  React.useEffect(() => {
+    api.getAllNeededData()
+    .then(([user, cards]) => {
+      setUserData(user);
+      setCards(cards);
+    })
+  }, []);
 
   return (
     <>
       <Header />
       <Main
+        userName={user.name}
+        userDescription={user.about}
+        userAvatar={user.avatar}
+        cardsData={cards}
         handleEditAvatarCLick={handleEditAvatarPopupOnClick}
         handleEditProfileClick={handleEditProfileOnClick}
         handleAddPlaceClick={handleAddCardPopupOnClick}
@@ -119,21 +135,6 @@ function App() {
       </PopupWithForm>
         {/* Popup delete card  */}
       <PopupWithForm popupName="delete-card" popupTitle="Вы уверены ?" popupTextButton="Да" />
-
-
-      <template id="card">
-        <article className="element">
-          <img className="element__image" alt="" />
-          <button className="button element__button-bin" type="button"></button>
-          <div className="element__container">
-            <h2 className="element__title"></h2>
-            <div className="element__like">
-              <button className="button element__button" type="button"></button>
-              <span className="element__counter">0</span>
-            </div>
-          </div>
-        </article>
-      </template>
     </>
   );
 }
