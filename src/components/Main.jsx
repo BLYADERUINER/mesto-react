@@ -38,7 +38,7 @@ function Main({
         ></button>
       </section>
       <section className="elements content__elements">
-        {cardsData.map((card) => <Card cardData={card} onCardClick={onCardClick} />)}
+        {cardsData.map((card) => <Card cardData={card} onCardClick={onCardClick} key={card._id} />)}
       </section>
     </main>
   );

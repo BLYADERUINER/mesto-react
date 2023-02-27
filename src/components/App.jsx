@@ -77,7 +77,7 @@ function App() {
           type="text"
           minLength="2"
           maxLength="40"
-          value="Жак-Ив Кусто"
+          defaultValue="Жак-Ив Кусто"
           required
         />
         <span className="pop-up__error" id="input-userName-error"></span>
@@ -89,7 +89,7 @@ function App() {
           type="text"
           minLength="2"
           maxLength="400"
-          value="Исследователь океана"
+          defaultValue="Исследователь океана"
           required
         />
         <span className="pop-up__error" id="input-userAbout-error"></span>

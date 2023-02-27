@@ -5,7 +5,7 @@ function Card({ cardData, onCardClick }) {
   }
 
   return (
-      <article className="element" id={cardData._id}>
+      <article className="element">
         <div className="element__image" style={{ backgroundImage: `url(${cardData.link})` }} onClick={handleClick}></div>
         <button className="button element__button-bin" type="button"></button>
         <div className="element__container">
