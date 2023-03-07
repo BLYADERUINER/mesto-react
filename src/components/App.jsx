@@ -5,12 +5,14 @@ import Footer from './Footer.jsx';
 import PopupWithForm from './PopupWithForm.jsx';
 import { api } from '../utils/api.js';
 import ImagePopup from './ImagePopup.jsx';
+import { CurrentUserContext } from '../context/CurrentUserContext.jsx';
 
 function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState(null);
+  const [currentUser, setCurrentUser] = React.useState({});
   // открытие попов используя Хук состояния
   function handleEditProfileOnClick() {
     setEditProfilePopupOpen(true);
@@ -32,28 +34,32 @@ function App() {
     setSelectedCard(null);
   }
 
-  const [user, setUserData] = React.useState({});
   const [cards, setCards] = React.useState([]);
   
 
   React.useEffect(() => {
     api.getAllNeededData()
     .then(([user, cards]) => {
-      setUserData(user);
       setCards(cards);
     })
+    .catch((error) => console.log(error));
+  }, []);
+
+  React.useEffect(() => {
+    api.getUserInfo()
+    .then((name) => setCurrentUser(name))
     .catch((error) => console.log(error));
   }, []);
 
 
 
   return (
-    <>
+    <CurrentUserContext.Provider value={currentUser} >
       <Header />
       <Main
-        userName={user.name}
-        userDescription={user.about}
-        userAvatar={user.avatar}
+        userName={currentUser.name}
+        userDescription={currentUser.about}
+        userAvatar={currentUser.avatar}
         cardsData={cards}
         onCardClick={setSelectedCard}
         handleEditAvatarCLick={handleEditAvatarPopupOnClick}
@@ -144,7 +150,7 @@ function App() {
         {/* Popup delete card  */}
       <PopupWithForm popupName="delete-card" popupTitle="Вы уверены ?" popupTextButton="Да" />
       <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
-    </>
+    </CurrentUserContext.Provider>
   );
 }
 
