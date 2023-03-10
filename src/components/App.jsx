@@ -53,6 +53,16 @@ function App() {
 
 
 
+  function handleCardClick(card) {
+    const isLiked  =  card.likes.some((item) => item._id === currentUser._id);
+
+    api.changeLikeCardStatus(card._id, !isLiked)
+    .then((newCard) => {
+      setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+    });
+  }
+
+
   return (
     <CurrentUserContext.Provider value={currentUser} >
       <Header />
@@ -61,6 +71,7 @@ function App() {
         userDescription={currentUser.about}
         userAvatar={currentUser.avatar}
         cardsData={cards}
+        onCardLike={handleCardClick}
         onCardClick={setSelectedCard}
         handleEditAvatarCLick={handleEditAvatarPopupOnClick}
         handleEditProfileClick={handleEditProfileOnClick}

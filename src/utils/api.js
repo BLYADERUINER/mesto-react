@@ -101,6 +101,14 @@ class Api {
   .then(this._checkResponse)
   }
 
+  changeLikeCardStatus(cardId, isLiked) {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method: `${isLiked ? 'PUT' : 'DELETE'}`,
+      headers: this._headers
+    })
+    .then(this._checkResponse)
+  }
+
 
   getAllNeededData() {
     return Promise.all([this.getUserInfo(), this.getCards()]);

@@ -6,6 +6,7 @@ function Main({
   userAvatar,
   cardsData,
   onCardClick,
+  onCardLike,
   handleEditAvatarCLick,
   handleEditProfileClick,
   handleAddPlaceClick
@@ -38,7 +39,7 @@ function Main({
         ></button>
       </section>
       <section className="elements content__elements">
-        {cardsData.map((card) => <Card cardData={card} onCardClick={onCardClick} key={card._id} />)}
+        {cardsData.map((card) => <Card cardData={card} onCardClick={onCardClick} key={card._id} onCardLike={onCardLike} />)}
       </section>
     </main>
   );
