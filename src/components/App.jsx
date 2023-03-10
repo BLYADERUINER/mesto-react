@@ -58,8 +58,18 @@ function App() {
 
     api.changeLikeCardStatus(card._id, !isLiked)
     .then((newCard) => {
-      setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
-    });
+      setCards((state) => state.map((item) => item._id === card._id ? newCard : item));
+    })
+    .catch((error) => console.log(error));
+  }
+
+
+  function handleCardDelete(cardId) {
+    api.deleteUserCard(cardId)
+    .then(() => {
+      setCards((state) => state.filter((item) => item._id !== cardId))
+    })
+    .catch((error) => console.log(error));
   }
 
 
@@ -73,6 +83,7 @@ function App() {
         cardsData={cards}
         onCardLike={handleCardClick}
         onCardClick={setSelectedCard}
+        onCardDelete={handleCardDelete}
         handleEditAvatarCLick={handleEditAvatarPopupOnClick}
         handleEditProfileClick={handleEditProfileOnClick}
         handleAddPlaceClick={handleAddCardPopupOnClick}

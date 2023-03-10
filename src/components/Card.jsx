@@ -1,7 +1,7 @@
 import React from "react";
 import { CurrentUserContext } from "../context/CurrentUserContext";
 
-function Card({ cardData, onCardClick, onCardLike }) {
+function Card({ cardData, onCardClick, onCardLike, onCardDelete }) {
   const currentUser = React.useContext(CurrentUserContext);
   const isOwn = cardData.owner._id === currentUser._id;
   const isLiked = cardData.likes.some(user => user._id === currentUser._id);
@@ -16,10 +16,14 @@ function Card({ cardData, onCardClick, onCardLike }) {
     return onCardLike(cardData);
   }
 
+  function handleDeleteCardOnClick() {
+    return onCardDelete(cardData._id);
+  }
+
   return (
       <article className="element">
         <div className="element__image" style={{ backgroundImage: `url(${cardData.link})` }} onClick={handleClick}></div>
-        {isOwn && <button className="button element__button-bin" type="button" />}
+        {isOwn && <button className="button element__button-bin" type="button" onClick={handleDeleteCardOnClick} />}
         <div className="element__container">
           <h2 className="element__title">{cardData.name}</h2>
           <div className="element__like">
