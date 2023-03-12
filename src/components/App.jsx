@@ -74,6 +74,14 @@ function App() {
   }
 
 
+  function handleUpdateUser({name, about}) {
+    api.patchProfileEdit(name, about)
+    .then((response) => setCurrentUser(response))
+    .then(() => closeAllPopups())
+    .catch((error) => console.log(error));
+  }
+
+
   return (
     <CurrentUserContext.Provider value={currentUser} >
       <Header />
@@ -91,7 +99,11 @@ function App() {
       />
       <Footer />
         {/* Popup edit profile */}
-      <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
+      <EditProfilePopup
+        isOpen={isEditProfilePopupOpen}
+        onClose={closeAllPopups}
+        onUpdateUser={handleUpdateUser}
+      />
         {/* Popup Add card */}
       <PopupWithForm
        popupName="add-card"
