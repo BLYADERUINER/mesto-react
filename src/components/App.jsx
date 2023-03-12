@@ -5,6 +5,7 @@ import Footer from './Footer.jsx';
 import PopupWithForm from './PopupWithForm.jsx';
 import { api } from '../utils/api.js';
 import ImagePopup from './ImagePopup.jsx';
+import EditProfilePopup from './EditProfilePopup.jsx';
 import { CurrentUserContext } from '../context/CurrentUserContext.jsx';
 
 function App() {
@@ -25,7 +26,7 @@ function App() {
   function handleEditAvatarPopupOnClick() {
     setEditAvatarPopupOpen(true);
   }
-  
+
 
   function closeAllPopups() {
     setEditProfilePopupOpen(false);
@@ -35,7 +36,7 @@ function App() {
   }
 
   const [cards, setCards] = React.useState([]);
-  
+
 
   React.useEffect(() => {
     api.getAllNeededData()
@@ -90,43 +91,12 @@ function App() {
       />
       <Footer />
         {/* Popup edit profile */}
-      <PopupWithForm 
-       popupName="edit-profile" 
-       popupTitle="Редактировать профиль" 
-       popupTextButton="Сохранить" 
-       isOpen={isEditProfilePopupOpen}
-       onClose={closeAllPopups}
-      >
-        <input
-          className="pop-up__input pop-up__input_edit-userName"
-          name="userName"
-          id="input-userName"
-          placeholder="Иван Иванов"
-          type="text"
-          minLength="2"
-          maxLength="40"
-          defaultValue="Жак-Ив Кусто"
-          required
-        />
-        <span className="pop-up__error" id="input-userName-error"></span>
-        <input
-          className="pop-up__input pop-up__input_edit-userAbout"
-          name="userAbout"
-          id="input-userAbout"
-          placeholder="Расхититель гробниц"
-          type="text"
-          minLength="2"
-          maxLength="400"
-          defaultValue="Исследователь океана"
-          required
-        />
-        <span className="pop-up__error" id="input-userAbout-error"></span>
-      </PopupWithForm>
+      <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
         {/* Popup Add card */}
-      <PopupWithForm 
-       popupName="add-card" 
-       popupTitle="Новое место" 
-       popupTextButton="Создать"  
+      <PopupWithForm
+       popupName="add-card"
+       popupTitle="Новое место"
+       popupTextButton="Создать"
        isOpen={isAddPlacePopupOpen}
        onClose={closeAllPopups}
       >
@@ -152,10 +122,10 @@ function App() {
         <span className="pop-up__error" id="input-cardLink-error"></span>
       </PopupWithForm>
         {/* Popup edit avatar */}
-      <PopupWithForm 
-       popupName="edit-avatar" 
-       popupTitle="Обновить аватар" 
-       popupTextButton="Сохранить" 
+      <PopupWithForm
+       popupName="edit-avatar"
+       popupTitle="Обновить аватар"
+       popupTextButton="Сохранить"
        isOpen={isEditAvatarPopupOpen}
        onClose={closeAllPopups}
        >
