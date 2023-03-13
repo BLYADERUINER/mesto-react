@@ -6,7 +6,9 @@ import PopupWithForm from './PopupWithForm.jsx';
 import { api } from '../utils/api.js';
 import ImagePopup from './ImagePopup.jsx';
 import EditProfilePopup from './EditProfilePopup.jsx';
+import EditAvatarPopup from './EditAvatarPopup.jsx';
 import { CurrentUserContext } from '../context/CurrentUserContext.jsx';
+
 
 function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
@@ -82,6 +84,14 @@ function App() {
   }
 
 
+  function handleUpdateUserAvatar(avatarLink) {
+    api.patchAvatar(avatarLink)
+    .then((response) => setCurrentUser(response))
+    .then(() => closeAllPopups())
+    .catch((error) => console.log(error));
+  }
+
+
   return (
     <CurrentUserContext.Provider value={currentUser} >
       <Header />
@@ -134,23 +144,7 @@ function App() {
         <span className="pop-up__error" id="input-cardLink-error"></span>
       </PopupWithForm>
         {/* Popup edit avatar */}
-      <PopupWithForm
-       popupName="edit-avatar"
-       popupTitle="Обновить аватар"
-       popupTextButton="Сохранить"
-       isOpen={isEditAvatarPopupOpen}
-       onClose={closeAllPopups}
-       >
-        <input
-          className="pop-up__input pop-up__input_avatar-link"
-          name="avatarLink"
-          id="input-avatarLink"
-          placeholder="Ссылка на картинку"
-          type="url"
-          required
-        />
-        <span className="pop-up__error" id="input-avatarLink-error"></span>
-      </PopupWithForm>
+      <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateUserAvatar} />
         {/* Popup delete card  */}
       <PopupWithForm popupName="delete-card" popupTitle="Вы уверены ?" popupTextButton="Да" />
       <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
